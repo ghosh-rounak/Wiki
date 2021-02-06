@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph"
+    app:startDestination="@id/articleSearchFragment">
+
+    <fragment
+        android:id="@+id/articleSearchFragment"
+        android:name="com.example.wiki.ui.article_search.ArticleSearchFragment"
+        android:label="ArticleSearchFragment" >
+        <action
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            android:id="@+id/action_articleSearchFragment_to_articlesFragment"
+            app:destination="@id/articlesFragment" />
+        <action
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            android:id="@+id/action_articleSearchFragment_to_articleDetailFragment"
+            app:destination="@id/articleDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/articlesFragment"
+        android:name="com.example.wiki.ui.articles.ArticlesFragment"
+        android:label="ArticlesFragment" >
+        <argument android:name="search_query"
+            android:defaultValue="None"/>
+        <action
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            android:id="@+id/action_articlesFragment_to_articleDetailFragment"
+            app:destination="@id/articleDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/articleDetailFragment"
+        android:name="com.example.wiki.ui.article_detail.ArticleDetailFragment"
+        android:label="ArticleDetailFragment">
+        <argument android:name="article"
+            app:argType="com.example.wiki.data.network.responses.Page"/>
+        <argument android:name="saved_article"
+            app:argType="com.example.wiki.data.db.entities.Article"/>
+    </fragment>
+
+</navigation>

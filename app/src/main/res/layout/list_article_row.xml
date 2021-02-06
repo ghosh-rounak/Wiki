@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="article"
+            type="com.example.wiki.data.network.responses.Page" />
+    </data>
+
+<androidx.cardview.widget.CardView
+    android:id="@+id/rowLayout"
+    android:layout_marginTop="2dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/articleImg"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="fitXY"
+            android:background="@drawable/placeholder"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            app:loadImage="@{article.thumbnail.source}"
+            android:contentDescription="@string/article_image" />
+
+        <TextView
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:padding="5dp"
+            android:id="@+id/articleTitle"
+            android:text="@{article.title}"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/articleImg"
+            android:layout_toEndOf="@id/articleImg"
+            android:layout_toRightOf="@id/articleImg" />
+
+        <TextView
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:padding="5dp"
+            android:id="@+id/articleDesc"
+            android:text="@{article.terms.description[0]}"
+            android:textStyle="normal"
+            android:textSize="16sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/articleTitle"
+            android:layout_toEndOf="@id/articleImg"
+            android:layout_toRightOf="@id/articleImg" />
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
+</layout>

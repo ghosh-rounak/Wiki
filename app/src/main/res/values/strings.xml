@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Wiki</string>
+    <string name="search_wiki">Search Wiki</string>
+    <string name="search_icon">search icon</string>
+    <string name="article_image">article image</string>
+    <string name="recent_items">Recent Items:</string>
+    <string name="wiki_website">Wiki Website</string>
+    <string name="results">Results</string>
+</resources>
