@@ -51,6 +51,7 @@ class ArticleListAdapter(private val clickListener:(Page, Int)->Unit)
 class ArticleViewHolder(private val binding: ListArticleRowBinding): RecyclerView.ViewHolder(binding.root){
 
     fun bind(article : Page,clickListener:(Page,Int)->Unit){
+        binding.articleImg.setImageBitmap(null)
         binding.article=article //alternately row can be set manually
         binding.executePendingBindings()
 

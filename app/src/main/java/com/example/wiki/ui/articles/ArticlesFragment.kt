@@ -49,6 +49,7 @@ class ArticlesFragment : Fragment() {
         return binding.root
     }
 
+
     private fun callSearchApi() {
         //call search api
         if(searchQuery!=null){
@@ -62,6 +63,8 @@ class ArticlesFragment : Fragment() {
         navController= Navigation.findNavController(view)
         setButtonClicks()
     }
+
+
 
 
     private fun setDataBindingRelatedComponents() {
