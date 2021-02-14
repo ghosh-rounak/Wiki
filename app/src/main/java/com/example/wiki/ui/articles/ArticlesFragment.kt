@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
 import com.example.wiki.R
 import com.example.wiki.data.network.responses.Page
 import com.example.wiki.databinding.FragmentArticlesBinding
@@ -19,8 +20,11 @@ import com.example.wiki.ui.ArticlesViewModel
 import com.example.wiki.ui.MainActivity
 import com.example.wiki.ui.adapters.ArticleListAdapter
 
-class ArticlesFragment : Fragment() {
+
+class ArticlesFragment : Fragment()/*,OnArticleItemClickListner*/ {
     private lateinit var adapter: ArticleListAdapter
+
+    //private lateinit var adapter: ArticleAdapter
 
     //declare navController
     private lateinit var navController: NavController
@@ -36,17 +40,22 @@ class ArticlesFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
-        Log.d("onCreate", "onCreateView: executing")
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_articles,container,false)
+        Log.d("onCreate", "onCreateView:  ArticlesFragment executing")
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_articles, container, false)
         setDataBindingRelatedComponents()
         initRecyclerView()
         createObservers()
         callSearchApi()
         // Inflate the layout for this fragment
         return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.d("onCreate", "onDestroyView: ArticlesFragment executing")
     }
 
 
@@ -82,13 +91,28 @@ class ArticlesFragment : Fragment() {
             )
         }
         binding.articlesRv.adapter = adapter
+
+       /* binding.articlesRv.layoutManager = LinearLayoutManager(activity)
+        binding.articlesRv.adapter = ArticleAdapter(this)
+        adapter = binding.articlesRv.adapter as ArticleAdapter*/
+
+        //to be added only when there is no pagination starts-----
+        adapter.registerAdapterDataObserver(object : AdapterDataObserver() {
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                super.onItemRangeInserted(positionStart, itemCount)
+                Log.d("onCreate", "Scroll Top: ")
+                binding.articlesRv.smoothScrollToPosition(0)
+            }
+        })
+        //to be added only when there is no pagination ends-----
+
     }
 
     private fun createObservers() {
         //Required for Observing and displaying Events
         viewModel.message.observe(viewLifecycleOwner) { it ->
             it.getContentIfNotHandled()?.let {
-               Toast.makeText(activity,it,Toast.LENGTH_SHORT).show()
+               Toast.makeText(activity, it, Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -103,7 +127,9 @@ class ArticlesFragment : Fragment() {
 
         viewModel.articlesData.observe(viewLifecycleOwner) {
             if(it!=null){
+                Log.d("onCreate", "Search: Call 2")
                 adapter.differ.submitList(it)
+                //adapter.submitList(it)
             }
         }
     }
@@ -121,6 +147,18 @@ class ArticlesFragment : Fragment() {
             requireActivity().onBackPressed()
         }
     }
+
+    /*override fun onItemClick(item: Page, position: Int) {
+        Log.d("onCreate", "listItem position clicked : $position")
+        Log.d("onCreate", "listItemClicked: $item")
+        if (::navController.isInitialized) {
+            // navController is initialized
+            val bundle= bundleOf(
+                    "article" to item
+            )
+            navController.navigate(R.id.action_articlesFragment_to_articleDetailFragment, bundle)
+        }
+    }*/
 
 
     //ITEM Click on each item of the Recycler View

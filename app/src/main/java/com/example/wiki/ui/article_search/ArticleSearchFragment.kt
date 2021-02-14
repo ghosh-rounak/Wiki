@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.wiki.R
 import com.example.wiki.data.db.entities.Article
 import com.example.wiki.databinding.FragmentArticleSearchBinding
@@ -75,6 +76,16 @@ class ArticleSearchFragment : Fragment() {
         })
 
         binding.recentRv.adapter = adapter
+
+        //Added ----
+        adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                super.onItemRangeInserted(positionStart, itemCount)
+                Log.d("onCreate", "Scroll Top: ")
+                binding.recentRv.smoothScrollToPosition(0)
+            }
+        })
+        //-------
     }
 
     private fun createObservers() {

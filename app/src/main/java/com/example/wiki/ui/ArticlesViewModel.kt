@@ -17,7 +17,7 @@ import retrofit2.Response
 import java.io.IOException
 
 class ArticlesViewModel(private val repository: ArticlesRepository) : ViewModel(), Observable {
-    private var listOfArticles: MutableList<Page>? = null
+    //private var listOfArticles: MutableList<Page>? = null
 
     //Required for Events
     private val statusMessage = MutableLiveData<Event<String>>()
@@ -67,7 +67,11 @@ class ArticlesViewModel(private val repository: ArticlesRepository) : ViewModel(
         if (response.isSuccessful) {
             response.body()?.let { resultResponse ->
                 if(resultResponse.query?.pages != null){
-                    listOfArticles = resultResponse.query.pages as MutableList<Page>
+                    Log.d("onCreate", "Search: Call 1")
+                    val listOfArticles = resultResponse.query.pages as MutableList<Page>
+                    articles.postValue(listOfArticles) //to be observed from ui
+                }else{
+                    val listOfArticles = mutableListOf<Page>() // empty list
                     articles.postValue(listOfArticles) //to be observed from ui
                 }
                 prog.postValue(false)

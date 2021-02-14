@@ -36,11 +36,11 @@ class ArticleListAdapter(private val clickListener:(Page, Int)->Unit)
         return differ.currentList.size
     }
 
-    //Added starts
+   /* //Added starts
     override fun getItemId(position: Int) = position.toLong()
     override fun getItemViewType(position: Int) = position
 
-    //Added ends
+    //Added ends*/
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
         holder.bind(differ.currentList[position],clickListener)
